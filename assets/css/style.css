@@ -1,0 +1,10 @@
+header {
+    color: red;
+}
+
+#start-button {
+    width: 200px;
+    height: 150px;
+    border: solid red 2px;
+    cursor: pointer;
+}
