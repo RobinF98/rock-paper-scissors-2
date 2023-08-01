@@ -1,0 +1,31 @@
+[{
+        "name": "rock",
+        "weakness": ["paper", "spock"],
+        "img": "./assets/images/rock.svg",
+        "alt": "Vector image of a hand making a rock gesture"
+    },
+    {
+        "name": "paper",
+        "weakness": ["scissors", "lizard"],
+        "img": "./assets/images/paper.svg",
+        "alt": "Vector image of a hand making a paper gesture"
+    },
+    {
+        "name": "scissors",
+        "weakness": ["rock", "spock"],
+        "img": "./assets/images/scissors.svg",
+        "alt": "Vector image of a hand making a scissors gesture"
+    },
+    {
+        "name": "lizard",
+        "weakness": ["rock", "scissors"],
+        "img": "./assets/images/lizard.svg",
+        "alt": "Vector image of a hand making a lizard gesture"
+    },
+    {
+        "name": "spock",
+        "weakness": ["paper", "lizard"],
+        "img": "./assets/images/spock.svg",
+        "alt": "Vector image of a hand making a vulcan salute gesture"
+    }
+]
