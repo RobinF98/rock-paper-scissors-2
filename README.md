@@ -8,4 +8,4 @@ An interactive web game for playing Rock, Paper, Scissors, with a twist
 
  ---
 
-SVG images were sourced from [The Noun Project](https://thenounproject.com/)
+SVG images were sourced from [The Noun Project](https://thenounproject.com/), from the collection by [Juicy Fish](https://thenounproject.com/admin885/)
