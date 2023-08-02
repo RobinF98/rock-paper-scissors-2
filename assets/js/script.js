@@ -1,78 +1,93 @@
-let gameData1 = [{
-        "name": "rock",
-        "weakness": ["paper", "spock"],
-        "img": "./assets/images/rock.svg",
-        "alt": "Vector image of a hand making a rock gesture"
-    },
-    {
-        "name": "paper",
-        "weakness": ["scissors", "lizard"],
-        "img": "./assets/images/paper.svg",
-        "alt": "Vector image of a hand making a paper gesture"
-    },
-    {
-        "name": "scissors",
-        "weakness": ["rock", "spock"],
-        "img": "./assets/images/scissors.svg",
-        "alt": "Vector image of a hand making a scissors gesture"
-    },
-    {
-        "name": "lizard",
-        "weakness": ["rock", "scissors"],
-        "img": "./assets/images/lizard.svg",
-        "alt": "Vector image of a hand making a lizard gesture"
-    },
-    {
-        "name": "spock",
-        "weakness": ["paper", "lizard"],
-        "img": "./assets/images/spock.svg",
-        "alt": "Vector image of a hand making a vulcan salute gesture"
-    }
-];
-
 gameData = []
+let gameDiv = document.getElementById("game-div")
+let startButton = document.getElementById("start-button")
+let weapon;
 
 let startGame = () => {
-    let button = document.getElementById("start-button")
-    button.style.backgroundColor = "pink"
-    // let gameData = buildData()
+
+    startButton.style.backgroundColor = "pink"
     fetchData("../assets/js/data.json")
-    console.log(gameData1)
-    console.log("^ gamedata 1, below is gameData");
-    console.log(gameData)
 }
 
+startButton.addEventListener("click", startGame)
 
-/* 
+/**
  * fetch data from specified json file url
  */
-let fetchData = async url => {
-    try {
-        const response = await fetch(url)
-        const data = await response.json()
+let fetchData = url => {
+    const data = fetch(url)
+        .then(response => response.json())
+        .then(data => {
+            gameData = data
+            showGame();
+        })
+}
 
-        // for (let i = 0; i < data.length; i++) {
-        //     gameData.push(data[i]);
-        // }
-        gameData.map()
+let showGame = (bestOf = 3, noWeapons = 3) => {
 
-    } catch (error) {
-        console.log(error)
+    const html = document.createElement("div")
+    html.innerHTML =
+        `
+        <div class="${gameData[0].name} selButton">
+            <h2>${gameData[0].name}</h2>
+        </div>
+        <div class="${gameData[1].name} selButton">
+            <h2>${gameData[1].name}</h2>
+        </div>
+        <div class="${gameData[2].name} selButton">
+            <h2>${gameData[2].name}</h2>
+        </div>
+        `
+    html.id = "selection"
+    gameDiv.appendChild(html)
+    //add event listeners to all instances of selButton class
+    let buttons = document.getElementsByClassName("selButton")
+    for (let i of buttons) {
+        i.addEventListener('click', () => {
+            weapon = userWeapon(i.classList[0])
+            confirm()
+            console.log(`Weapon is ${weapon}`)
+        })
     }
 }
 
-let buildData = async () => {
-    let gameData = await fetchData("../assets/js/data.json")
-    console.log(gameData)
-    return Promise.resolve(gameData)
+let computerMove = (noWeapons = 3) => {
+    let i = Math.floor(Math.random() * noWeapons)
+    let aiWeapon = gameData[i].name;
+    console.log(`AI weapon is ${aiWeapon}`);
+    return aiWeapon;
 }
+/**
+ * Returns user selected weapon
+ */
+let userWeapon = weapon => {
+    console.log(`User weapon is ${weapon}`)
+    return weapon
+};
 
-let showGame = (bestOf, noWeapons = 3) => {
-    const html = `<div class='gameDiv'>
-                    <div class = 'selButton rockButton' onClick =></div>
-                </div>`
-}
+let confirm = () => {
+    let confirmDiv = document.createElement("div");
+    confirmDiv.innerHTML +=
+        `
+        <h1>You chose ${weapon}</h1>
+        <h2>Are you absolutely sure??</h2>
+        <div class = "confirm__yes">
+            <h3>Yes</h3>
+        </div>
+        <div class = "confirm__no">
+            <h3>No</h3>
+        </div>
+    `
+    confirmDiv.classList.add("confirm")
+    gameDiv.appendChild(confirmDiv)
+    let confirm = document.getElementsByClassName("confirm")[0];
+    let confirmNo = document.getElementsByClassName("confirm__no")[0];
+    confirmNo.addEventListener("click", () => {
+        gameDiv.removeChild(confirm)
+    })
 
-let computerMove = (difficulty = 3) => {
+    let confirmYes = document.getElementsByClassName("confirm__yes")[0];
+    confirmYes.addEventListener("click", () => {
 
+    })
 }
