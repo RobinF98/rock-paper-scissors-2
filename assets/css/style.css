@@ -36,7 +36,8 @@ header {
     height: 400px;
 }
 
-.confirm__no {
+.confirm__no,
+.confirm__yes {
     cursor: pointer;
 }
 
@@ -48,3 +49,18 @@ header {
 /* .unclick {
     pointer-events: none;
 } */
+
+.playerwin,
+.ailose {
+    color: greenyellow;
+}
+
+.playerlose,
+.aiwin {
+    color: red;
+}
+
+.playerdraw,
+.aidraw {
+    color: beige;
+}
