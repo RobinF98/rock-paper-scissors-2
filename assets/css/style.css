@@ -9,12 +9,14 @@ header {
     cursor: pointer;
 }
 
-.gameDiv {
+#game-div {
+    position: relative;
     width: 100%;
     height: 500px;
     background-color: rgb(34, 95, 150);
 
     display: flex;
+    justify-content: center;
 }
 
 .selButton {
@@ -25,3 +27,24 @@ header {
     border: solid white 2px;
     cursor: pointer;
 }
+
+.confirm {
+    position: absolute;
+    z-index: 2;
+    background-color: red;
+    width: 400px;
+    height: 400px;
+}
+
+.confirm__no {
+    cursor: pointer;
+}
+
+/* Hides elements */
+.hide {
+    display: none;
+}
+
+/* .unclick {
+    pointer-events: none;
+} */
