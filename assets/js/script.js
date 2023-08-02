@@ -2,6 +2,10 @@ gameData = []
 let gameDiv = document.getElementById("game-div")
 let startButton = document.getElementById("start-button")
 let weapon;
+let playerScore;
+let aiScore;
+let aiWeapon;
+let player;
 
 let startGame = () => {
 
@@ -26,18 +30,13 @@ let fetchData = url => {
 let showGame = (bestOf = 3, noWeapons = 3) => {
 
     const html = document.createElement("div")
-    html.innerHTML =
-        `
-        <div class="${gameData[0].name} selButton">
-            <h2>${gameData[0].name}</h2>
-        </div>
-        <div class="${gameData[1].name} selButton">
-            <h2>${gameData[1].name}</h2>
-        </div>
-        <div class="${gameData[2].name} selButton">
-            <h2>${gameData[2].name}</h2>
-        </div>
-        `
+    for (let i = 0; i < noWeapons; i++) {
+        html.innerHTML += `
+            <div class="${gameData[i].name} selButton">
+                <h2>${gameData[i].name}</h2>
+            </div>
+            `
+    }
     html.id = "selection"
     gameDiv.appendChild(html)
     //add event listeners to all instances of selButton class
@@ -53,7 +52,7 @@ let showGame = (bestOf = 3, noWeapons = 3) => {
 
 let computerMove = (noWeapons = 3) => {
     let i = Math.floor(Math.random() * noWeapons)
-    let aiWeapon = gameData[i].name;
+    aiWeapon = gameData[i].name;
     console.log(`AI weapon is ${aiWeapon}`);
     return aiWeapon;
 }
@@ -88,6 +87,58 @@ let confirm = () => {
 
     let confirmYes = document.getElementsByClassName("confirm__yes")[0];
     confirmYes.addEventListener("click", () => {
-
+        gamePlay();
     })
+}
+
+let playerWin = () => {
+    let res
+    if (aiWeapon === player.name) {
+        res = "draw"
+        return res
+    }
+    res = !player.weakness.includes(aiWeapon) ? "win" : "lose"
+    return res
+}
+
+let displayWin = (res) => {
+    let html = document.createElement("div")
+    html.innerHTML = `
+        <h1 class = "ai${res}">
+            AI : ${aiWeapon}
+        </h1>
+        <h1 class = "player${res}">
+            Player: ${player.name}
+        </h1>`
+
+    switch (res) {
+        case "draw":
+            html.innerHTML += `
+            <h2>Let's try that again. You guys are eerily similar</h2>`
+            break
+        case "win":
+            html.innerHTML +=
+                `<h2>You win, you beautiful biscuit</h2>`
+            break
+        case "lose":
+            html.innerHTML +=
+                `<h2>Better luck next time, you silly sausage</h2>`
+    }
+    html.innerHTML += `
+        <div class = "replay">
+            <h3>Onwards...</h3>
+        </div>
+    `
+    html.classList.add("winDisplay")
+    // remove children of gameDiv
+    while (gameDiv.firstChild) {
+        gameDiv.removeChild(gameDiv.firstChild)
+    }
+    gameDiv.appendChild(html)
+}
+
+let gamePlay = () => {
+    computerMove()
+    player = gameData.find(w => weapon === w.name)
+    displayWin(playerWin())
 }
