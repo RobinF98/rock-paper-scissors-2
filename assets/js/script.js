@@ -1,19 +1,33 @@
 gameData = []
 let gameDiv = document.getElementById("game-div")
 let startButton = document.getElementById("start-button")
-let weapon;
-let playerScore;
-let aiScore;
-let aiWeapon;
-let player;
+let scoreDiv = document.getElementById("score-div")
+let noWeaponsButton = document.getElementById("no-weapons")
+let weapon
+let playerScore
+let aiScore
+let aiWeapon
+let player
+let bestOf
+let noWeapons = 3
 
+/**
+ * Sets variables to 0 and runs game
+ */
 let startGame = () => {
-
+    clearGame(gameDiv)
     startButton.style.backgroundColor = "pink"
     fetchData("../assets/js/data.json")
+
+    playerScore = aiScore = roundNo = 0
+
 }
 
 startButton.addEventListener("click", startGame)
+noWeaponsButton.addEventListener("change", () => {
+    noWeapons = document.getElementById("no-weapons").value
+    console.log(`no weapons: ${noWeapons}`)
+})
 
 /**
  * fetch data from specified json file url
@@ -23,13 +37,16 @@ let fetchData = url => {
         .then(response => response.json())
         .then(data => {
             gameData = data
-            showGame();
+            showGame()
         })
 }
 
-let showGame = (bestOf = 3, noWeapons = 3) => {
+/**
+ * Sets up game div with event listeners
+ */
+let showGame = () => {
 
-    const html = document.createElement("div")
+    let html = document.createElement("div")
     for (let i = 0; i < noWeapons; i++) {
         html.innerHTML += `
             <div class="${gameData[i].name} selButton">
@@ -50,11 +67,14 @@ let showGame = (bestOf = 3, noWeapons = 3) => {
     }
 }
 
+/**
+ * randomly generates the computer's move based on game noWeapons
+ */
 let computerMove = (noWeapons = 3) => {
     let i = Math.floor(Math.random() * noWeapons)
-    aiWeapon = gameData[i].name;
-    console.log(`AI weapon is ${aiWeapon}`);
-    return aiWeapon;
+    aiWeapon = gameData[i].name
+    console.log(`AI weapon is ${aiWeapon}`)
+    return aiWeapon
 }
 /**
  * Returns user selected weapon
@@ -62,10 +82,13 @@ let computerMove = (noWeapons = 3) => {
 let userWeapon = weapon => {
     console.log(`User weapon is ${weapon}`)
     return weapon
-};
+}
 
+/**
+ * Creates div to confirm user move
+ */
 let confirm = () => {
-    let confirmDiv = document.createElement("div");
+    let confirmDiv = document.createElement("div")
     confirmDiv.innerHTML +=
         `
         <h1>You chose ${weapon}</h1>
@@ -79,18 +102,21 @@ let confirm = () => {
     `
     confirmDiv.classList.add("confirm")
     gameDiv.appendChild(confirmDiv)
-    let confirm = document.getElementsByClassName("confirm")[0];
-    let confirmNo = document.getElementsByClassName("confirm__no")[0];
+    let confirm = document.getElementsByClassName("confirm")[0]
+    let confirmNo = document.getElementsByClassName("confirm__no")[0]
     confirmNo.addEventListener("click", () => {
         gameDiv.removeChild(confirm)
     })
 
-    let confirmYes = document.getElementsByClassName("confirm__yes")[0];
+    let confirmYes = document.getElementsByClassName("confirm__yes")[0]
     confirmYes.addEventListener("click", () => {
-        gamePlay();
+        gamePlay()
     })
 }
 
+/**
+ * Returns win, lose, or draw, based on outcome of game
+ */
 let playerWin = () => {
     let res
     if (aiWeapon === player.name) {
@@ -101,6 +127,9 @@ let playerWin = () => {
     return res
 }
 
+/**
+ * displays results screen after every round
+ */
 let displayWin = (res) => {
     let html = document.createElement("div")
     html.innerHTML = `
@@ -119,26 +148,64 @@ let displayWin = (res) => {
         case "win":
             html.innerHTML +=
                 `<h2>You win, you beautiful biscuit</h2>`
+            playerScore++
+            roundNo++
             break
         case "lose":
             html.innerHTML +=
                 `<h2>Better luck next time, you silly sausage</h2>`
+            aiScore++
+            roundNo++
     }
+
+    showScores()
+
     html.innerHTML += `
         <div class = "replay">
             <h3>Onwards...</h3>
         </div>
     `
     html.classList.add("winDisplay")
-    // remove children of gameDiv
-    while (gameDiv.firstChild) {
-        gameDiv.removeChild(gameDiv.firstChild)
-    }
+
+    clearGame(gameDiv)
     gameDiv.appendChild(html)
+
+    // reset to continue game
+    document.getElementsByClassName("replay")[0].addEventListener("click", () => {
+        clearGame(gameDiv)
+        showGame()
+    })
 }
 
 let gamePlay = () => {
     computerMove()
     player = gameData.find(w => weapon === w.name)
     displayWin(playerWin())
+}
+
+/**
+ * Clears container div
+ */
+let clearGame = (div) => {
+    while (div.firstChild) {
+        div.removeChild(div.firstChild)
+    }
+}
+
+let checkEnd = () => {
+    let maxScore = Math.ceil(bestOf / 2)
+    // if (aiScore === ) {
+    // 
+    // }
+}
+
+let showScores = () => {
+    clearGame(scoreDiv)
+    let html = document.createElement("div")
+    html.innerHTML = `
+        Player Score: ${playerScore}
+        AI Score: ${aiScore}
+        Round no: ${roundNo}
+    `
+    scoreDiv.appendChild(html)
 }
