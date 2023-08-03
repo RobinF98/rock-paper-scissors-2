@@ -10,10 +10,12 @@ let aiWeapon
 let player
 let bestOf
 let noWeapons = 3
+let gameIconsDiv = document.getElementById("game-icons")
 
 /**
  * Sets variables to 0 and runs game
  */
+
 let startGame = () => {
     clearGame(gameDiv)
     startButton.style.backgroundColor = "pink"
@@ -45,7 +47,7 @@ let fetchData = url => {
  * Sets up game div with event listeners
  */
 let showGame = () => {
-
+    displayIcons()
     let html = document.createElement("div")
     for (let i = 0; i < noWeapons; i++) {
         html.innerHTML += `
@@ -208,4 +210,18 @@ let showScores = () => {
         Round no: ${roundNo}
     `
     scoreDiv.appendChild(html)
+}
+
+let displayIcons = () => {
+    let html = document.createElement("div")
+    console.log(gameData)
+    html.classList.add("circle")
+    for (let i = 0; i < gameData.length; i++) {
+        html.innerHTML += `
+            <img class="angle${i} gameIcon" src="${gameData[i].img}" alt="${gameData[i].alt}">
+        `
+        console.log(gameData[i])
+    }
+    console.log(html)
+    gameIconsDiv.appendChild(html)
 }
