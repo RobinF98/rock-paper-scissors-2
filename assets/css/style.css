@@ -80,3 +80,42 @@ header {
     color: lightslategray;
     cursor: pointer;
 }
+
+/* #game-icons {
+    
+} */
+
+.gameIcon {
+    position: absolute;
+    width: 100px;
+    left: 50%;
+    top: 50%;
+    margin: -50px;
+}
+
+.circle {
+    position: relative;
+    width: 600px;
+    height: 600px;
+
+}
+
+.angle0 {
+    transform: rotate(-90deg) translate(300px) rotate(90deg);
+}
+
+.angle1 {
+    transform: rotate(-18deg) translate(300px) rotate(18deg);
+}
+
+.angle2 {
+    transform: rotate(54deg) translate(300px) rotate(-54deg);
+}
+
+.angle3 {
+    transform: rotate(126deg) translate(300px) rotate(-126deg);
+}
+
+.angle4 {
+    transform: rotate(198deg) translate(300px) rotate(-198deg);
+}
