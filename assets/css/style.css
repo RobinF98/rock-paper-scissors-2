@@ -19,6 +19,17 @@ header {
     justify-content: center;
 }
 
+#score-div {
+    font-size: 2em;
+    color: white;
+    background-color: black;
+    width: 200px;
+    height: 200px;
+    position: absolute;
+    right: 20px;
+    top: 20px;
+}
+
 .selButton {
     width: 100px;
     height: 50px;
@@ -63,4 +74,9 @@ header {
 .playerdraw,
 .aidraw {
     color: beige;
+}
+
+.replay {
+    color: lightslategray;
+    cursor: pointer;
 }
