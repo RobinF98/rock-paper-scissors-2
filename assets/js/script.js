@@ -19,7 +19,7 @@ let gameIconsDiv = document.getElementById("game-icons")
 let startGame = () => {
     clearGame(gameDiv)
     startButton.style.backgroundColor = "pink"
-    fetchData("../assets/js/data.json")
+    fetchData("assets/js/data.json")
 
     playerScore = aiScore = roundNo = 0
 
