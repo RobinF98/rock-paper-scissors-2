@@ -26,6 +26,7 @@ let startGame = () => {
 }
 
 startButton.addEventListener("click", startGame)
+//get number of weapons
 noWeaponsButton.addEventListener("change", () => {
     noWeapons = document.getElementById("no-weapons").value
     console.log(`no weapons: ${noWeapons}`)
@@ -201,6 +202,9 @@ let checkEnd = () => {
     // }
 }
 
+/**
+ * Displays game scores
+ */
 let showScores = () => {
     clearGame(scoreDiv)
     let html = document.createElement("div")
@@ -212,16 +216,33 @@ let showScores = () => {
     scoreDiv.appendChild(html)
 }
 
+/**
+ * Displays visual icons of weapons
+ */
 let displayIcons = () => {
+    clearGame(gameIconsDiv)
     let html = document.createElement("div")
-    console.log(gameData)
-    html.classList.add("circle")
-    for (let i = 0; i < gameData.length; i++) {
+    html.classList.add(`circle`, `weapons${noWeapons}`)
+    for (let i = 0; i < noWeapons; i++) {
         html.innerHTML += `
             <img class="angle${i} gameIcon" src="${gameData[i].img}" alt="${gameData[i].alt}">
         `
-        console.log(gameData[i])
+        changeCssVars()
     }
     console.log(html)
     gameIconsDiv.appendChild(html)
+}
+
+/**
+ * Edits CSS variables to allow for pentagon or triangle layout of icons
+ */
+let changeCssVars = () => {
+    let root = document.documentElement
+    let incr = 360 / noWeapons
+    let a0 = -90
+    console.log(`a0 is: ${a0}`)
+    for (let i = 0; i < noWeapons; i++) {
+        root.style.setProperty(`--angle${i}`, a0 + i * parseInt(incr) + "deg")
+        console.log(getComputedStyle(root).getPropertyValue(`--angle${i}`) + `is  angle ${i}`)
+    }
 }
