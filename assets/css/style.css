@@ -1,4 +1,14 @@
+:root {
+    --angle0: ;
+    --angle1: ;
+    --angle2: ;
+    --angle3: ;
+    --angle4: ;
+
+}
+
 header {
+
     color: red;
 }
 
@@ -101,21 +111,21 @@ header {
 }
 
 .angle0 {
-    transform: rotate(-90deg) translate(300px) rotate(90deg);
+    transform: rotate(var(--angle0)) translate(300px) rotate(calc(0deg - var(--angle0)));
 }
 
 .angle1 {
-    transform: rotate(-18deg) translate(300px) rotate(18deg);
+    transform: rotate(var(--angle1)) translate(300px) rotate(calc(0deg - var(--angle1)));
 }
 
 .angle2 {
-    transform: rotate(54deg) translate(300px) rotate(-54deg);
+    transform: rotate(var(--angle2)) translate(300px) rotate(calc(0deg - var(--angle2)));
 }
 
 .angle3 {
-    transform: rotate(126deg) translate(300px) rotate(-126deg);
+    transform: rotate(var(--angle3)) translate(300px) rotate(calc(0deg - var(--angle3)));
 }
 
 .angle4 {
-    transform: rotate(198deg) translate(300px) rotate(-198deg);
+    transform: rotate(var(--angle4)) translate(300px) rotate(calc(0deg - var(--angle4)));
 }
