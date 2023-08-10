@@ -7,9 +7,39 @@
 
 }
 
-header {
+body {
+    padding: 0;
+    color: var(--white1);
+    font-family: sans-serif;
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
+    width: 100%;
+}
 
+header {
     color: red;
+    width: 100%;
+    background-color: aqua;
+    position: sticky;
+    z-index: 10;
+    height: 20px;
+    margin-bottom: 10px;
+}
+
+.nav {
+    display: flex;
+    width: 100%;
+
+}
+
+.navLink {
+    background-color: darksalmon;
+    align-self: flex-end;
+}
+
+.active {
+    background-color: salmon;
 }
 
 #start-button {
