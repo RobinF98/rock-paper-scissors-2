@@ -21,7 +21,6 @@ let startGame = () => {
   fetchData("assets/js/data.json")
 
   playerScore = aiScore = roundNo = 0
-
 }
 
 startButton.addEventListener("click", startGame)
@@ -29,6 +28,7 @@ startButton.addEventListener("click", startGame)
 noWeaponsButton.addEventListener("change", () => {
   noWeapons = document.getElementById("no-weapons").value
   console.log(`no weapons: ${noWeapons}`)
+  startGame()
 })
 
 /**
@@ -59,7 +59,8 @@ let showGame = () => {
   html.id = "selection"
   gameDiv.appendChild(html)
   //add event listeners to all instances of selButton class
-  let buttons = document.getElementsByClassName("selButton")
+  let buttons = document.querySelectorAll(".selButton, .gameIcon").values()
+  console.log(`Buttons: ${buttons}`)
   for (let button of buttons) {
     button.addEventListener('click', () => {
       weapon = userWeapon(button.classList[0])
@@ -208,8 +209,8 @@ let showScores = () => {
   clearGame(scoreDiv)
   let html = document.createElement("div")
   html.innerHTML = `
-        Player Score: ${playerScore}
-        AI Score: ${aiScore}
+        Player Score: ${playerScore} <br>
+        AI Score: ${aiScore} <br>
         Round no: ${roundNo}
     `
   scoreDiv.appendChild(html)
@@ -224,7 +225,7 @@ let displayIcons = () => {
   html.classList.add(`circle`, `weapons${noWeapons}`)
   for (let i = 0; i < noWeapons; i++) {
     html.innerHTML += `
-            <img class="angle${i} gameIcon" src="${gameData[i].img}" alt="${gameData[i].alt}">
+            <img class="${gameData[i].name} angle${i} gameIcon" src="${gameData[i].img}" alt="${gameData[i].alt}">
         `
     changeCssVars()
   }
