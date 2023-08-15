@@ -1,7 +1,8 @@
-gameData = []
-let gameDiv = document.getElementById("game-div")
-let startButton = document.getElementById("start-button")
-let scoreDiv = document.getElementById("score-div")
+let gameData = []
+const body = document.getElementsByTagName("body")[0]
+const gameDiv = document.getElementById("game-div")
+const startButton = document.getElementById("start-button")
+const scoreDiv = document.getElementById("score-div")
 let noWeaponsButton = document.getElementById("no-weapons")
 let weapon
 let playerScore
@@ -10,12 +11,14 @@ let aiWeapon
 let player
 let bestOf
 let noWeapons = 3
-let gameIconsDiv = document.getElementById("game-icons")
 
 /**
  * Sets variables to 0 and runs game etc etc 
  */
 let startGame = () => {
+  if (checkInProgress()) {
+    return
+  }
   clearGame(gameDiv)
   startButton.style.backgroundColor = "pink"
   fetchData("assets/js/data.json")
@@ -220,7 +223,7 @@ let showScores = () => {
  * Displays visual icons of weapons
  */
 let displayIcons = () => {
-  clearGame(gameIconsDiv)
+  // clearGame(gameIconsDiv)
   let html = document.createElement("div")
   html.classList.add(`circle`, `weapons${noWeapons}`)
   for (let i = 0; i < noWeapons; i++) {
@@ -230,7 +233,7 @@ let displayIcons = () => {
     changeCssVars()
   }
   console.log(html)
-  gameIconsDiv.appendChild(html)
+  gameDiv.appendChild(html)
 }
 
 /**
@@ -244,5 +247,36 @@ let changeCssVars = () => {
   for (let i = 0; i < noWeapons; i++) {
     root.style.setProperty(`--angle${i}`, a0 + i * parseInt(incr) + "deg")
     console.log(getComputedStyle(root).getPropertyValue(`--angle${i}`) + `is  angle ${i}`)
+  }
+}
+
+let checkInProgress = (check) => {
+  if (aiScore > 0 || playerScore > 0 || check) {
+    let html = document.createElement("div")
+    html.classList.add("warning_div")
+    html.innerHTML = `
+      <div class="warning_div_inner">
+        <h1>Are you sure you want to leave?</h1>
+        <p>
+          You will lose all your current progress
+        </p>
+        <div class="check_buttons">
+          <div class="check_leave check_button">
+            <h3>Leave</h3>
+          </div>
+          <div class="check_stay check_button">
+            <h3>Stay</h3>
+          </div>
+        </div>
+      </div>
+    `
+    body.appendChild(html)
+    let warningDiv = document.getElementsByClassName("warning_div")[0]
+    document.getElementsByClassName("check_stay")[0].addEventListener("click", () => {
+      body.removeChild(warningDiv)
+    })
+    return true
+  } else {
+    return false
   }
 }
