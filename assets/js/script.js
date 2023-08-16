@@ -1,9 +1,10 @@
 let gameData = []
 const body = document.getElementsByTagName("body")[0]
 const gameDiv = document.getElementById("game-div")
-const startButton = document.getElementById("start-button")
+const startButton = document.getElementsByClassName("start_button")[0]
 const scoreDiv = document.getElementById("score-div")
 let noWeaponsButton = document.getElementById("no-weapons")
+let resetButton
 let weapon
 let playerScore
 let aiScore
@@ -11,28 +12,72 @@ let aiWeapon
 let player
 let bestOf
 let noWeapons = 3
+let gameStarted = false
 
 /**
  * Sets variables to 0 and runs game etc etc 
  */
 let startGame = () => {
-  if (checkInProgress()) {
-    return
-  }
+  gameStarted = true;
+  // if (checkInProgress()) {
+  //   return
+  // }
   clearGame(gameDiv)
-  startButton.style.backgroundColor = "pink"
   fetchData("assets/js/data.json")
 
   playerScore = aiScore = roundNo = 0
+  startButton.innerHTML = `
+    <h1>Reset</h1>
+  `
+  // startButton.classList.toggle("reset_button")
+  // startButton.classList.toggle("start_button")
+  // if (gameStarted) {
+  //   clearGame(gameDiv, scoreDiv)
+  //   startButton.innerHTML = `
+  //   <h1>Start Game</h1>
+  // `
+  //   gameStarted = 0
+  //   return
+  // }
+  // gameStarted = 1
+  // resetButton = document.getElementsByClassName("reset_button")[0]
+  // resetButton.addEventListener("click", resetGame)
 }
 
-startButton.addEventListener("click", startGame)
+let resetGame = (skipCheck) => {
+  if (!skipCheck) {
+    checkInProgress(true)
+    return
+  }
+  clearGame(gameDiv, scoreDiv)
+  gameStarted = false;
+  startButton.innerHTML = `
+    <h1>Start Game</h1>
+  `
+  startButton.classList.toggle("reset_button")
+  startButton.classList.toggle("start_button")
+  console.log("Game Has been RESET")
+}
+
+startButton.addEventListener("click", () => {
+  if (gameStarted) {
+    resetGame()
+  } else {
+    startGame()
+  }
+})
+
+// startButton.addEventListener("click", startGame)
 //get number of weapons
 noWeaponsButton.addEventListener("change", () => {
   noWeapons = document.getElementById("no-weapons").value
   console.log(`no weapons: ${noWeapons}`)
   startGame()
 })
+
+// resetButton.addEventListener("click", () => {
+//   clearGame(gameDiv, scoreDiv)
+// })
 
 /**
  * fetch data from specified json file url
@@ -192,9 +237,11 @@ let gamePlay = () => {
 /**
  * Clears container div
  */
-let clearGame = (div) => {
-  while (div.firstChild) {
-    div.removeChild(div.firstChild)
+let clearGame = (...args) => {
+  for (let i = 0; i < args.length; i++) {
+    while (args[i].firstChild) {
+      args[i].removeChild(args[i].firstChild)
+    }
   }
 }
 
@@ -261,10 +308,10 @@ let checkInProgress = (check) => {
           You will lose all your current progress
         </p>
         <div class="check_buttons">
-          <div class="check_leave check_button">
+          <div class="check_leave check_button button">
             <h3>Leave</h3>
           </div>
-          <div class="check_stay check_button">
+          <div class="check_stay check_button button">
             <h3>Stay</h3>
           </div>
         </div>
@@ -273,6 +320,10 @@ let checkInProgress = (check) => {
     body.appendChild(html)
     let warningDiv = document.getElementsByClassName("warning_div")[0]
     document.getElementsByClassName("check_stay")[0].addEventListener("click", () => {
+      body.removeChild(warningDiv)
+    })
+    document.getElementsByClassName("check_leave")[0].addEventListener("click", () => {
+      resetGame(true)
       body.removeChild(warningDiv)
     })
     return true
