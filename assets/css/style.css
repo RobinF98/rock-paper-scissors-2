@@ -4,8 +4,11 @@
   --angle2: ;
   --angle3: ;
   --angle4: ;
-  --pink: rgb(197, 10, 113);
-  --light_pink: hsl(327, 90%, 50%);
+  /* --pink: #c40a71;
+   */
+  --light_pink: #f26a8d;
+  /* --light_pink: #f20d8b; */
+  --lilac: #d4adcf;
   --blue: hsl(184, 90%, 50%);
 
   --header_width: 300px;
@@ -18,8 +21,9 @@ body {
   font-family: sans-serif;
   display: flex;
   min-height: 100vh;
-  flex-direction: column;
-  width: 100%;
+  /* flex-direction: column; */
+  width: 100vw;
+  background-color: var(--lilac);
 }
 
 header {
@@ -27,25 +31,28 @@ header {
   height: 100vh;
   background-color: var(--light_pink);
   position: sticky;
-  z-index: 10;
   top: 0;
+  box-shadow: 0 0 10px black;
+  justify-content: center;
 }
 
 .nav {
   display: flex;
   width: 100%;
   flex-direction: row;
-  justify-content: center;
+  justify-content: space-around;
+  align-items: center;
 
 }
 
+/* 
 .navLink {
   background-color: var(--light_pink);
   margin: 20px 20px;
   display: flex;
   justify-content: center;
   align-items: center;
-}
+} */
 
 a {
   text-decoration: none;
@@ -63,25 +70,31 @@ main {
   flex-direction: column;
   flex: 1 0 auto;
   align-items: center;
-  margin-top: -1000px;
+  width: 50vw
 }
 
 footer {
-  margin-left: var(--header_width);
+  /* margin-left: var(--header_width); */
+  background-color: var(--light_pink);
 }
 
-#start-button {
+.start_button {
+  /* margin-top: 200px; */
   width: 200px;
-  height: 200;
-  border: solid red 2px;
-  cursor: pointer;
+  height: 70px;
+  /* background-color: white; */
+}
+
+.reset_button {
+  width: 200px;
+  height: 70px;
 }
 
 #game-div {
   position: relative;
   width: 100%;
   height: 700px;
-  background-color: rgb(34, 95, 150);
+  /* background-color: rgb(34, 95, 150); */
 
   display: flex;
   justify-content: center;
@@ -237,21 +250,22 @@ footer {
   /* width: max-content; */
 }
 
-.check_button,
+
 .button {
   display: flex;
   align-items: center;
   justify-content: space-around;
-
-  /* background-color: var(--pink); */
-  height: 3em;
-  width: 5em;
-  /* padding-bottom: 1em; */
   border: black solid 1px;
   border-radius: 10px;
   box-shadow: 0 5px black;
   transition: 200ms;
   cursor: pointer;
+}
+
+.check_button,
+.nav_link {
+  height: 3em;
+  width: 5em;
 }
 
 .check_button:hover,
@@ -260,4 +274,8 @@ footer {
   translate: 0 5px;
   box-shadow: 0 0px;
   /* background-color: var(--pink); */
+}
+
+.about_about {
+  width: 600px;
 }
