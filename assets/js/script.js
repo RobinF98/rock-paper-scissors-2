@@ -87,15 +87,15 @@ let showGame = () => {
   let html = document.createElement("div")
   for (let i = 0; i < noWeapons; i++) {
     html.innerHTML += `
-            <div class="${gameData[i].name} selButton">
+            <div class="${gameData[i].name} sel_button">
                 <h2>${gameData[i].name}</h2>
             </div>
             `
   }
   html.id = "selection"
   gameDiv.appendChild(html)
-  //add event listeners to all instances of selButton class
-  let buttons = document.querySelectorAll(".selButton, .gameIcon").values()
+  //add event listeners to all instances of sel_button class
+  let buttons = document.querySelectorAll(".sel_button, .gameIcon").values()
   for (let button of buttons) {
     button.addEventListener('click', () => {
       weapon = userWeapon(button.classList[0])
