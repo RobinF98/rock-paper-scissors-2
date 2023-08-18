@@ -3,6 +3,7 @@ const body = document.getElementsByTagName("body")[0]
 const gameDiv = document.getElementById("game-div")
 const startButton = document.getElementsByClassName("start_button")[0]
 const scoreDiv = document.getElementById("score-div")
+const aboutButton = document.getElementById("about")
 let noWeaponsButton = document.getElementById("no-weapons")
 let resetButton
 let weapon
@@ -22,38 +23,26 @@ let startGame = () => {
   // if (checkInProgress()) {
   //   return
   // }
-  clearGame(gameDiv)
+  // clearGame(gameDiv)
   fetchData("assets/js/data.json")
 
   playerScore = aiScore = roundNo = 0
   startButton.innerHTML = `
     <h1>Reset</h1>
   `
-  // startButton.classList.toggle("reset_button")
-  // startButton.classList.toggle("start_button")
-  // if (gameStarted) {
-  //   clearGame(gameDiv, scoreDiv)
-  //   startButton.innerHTML = `
-  //   <h1>Start Game</h1>
-  // `
-  //   gameStarted = 0
-  //   return
-  // }
-  // gameStarted = 1
-  // resetButton = document.getElementsByClassName("reset_button")[0]
-  // resetButton.addEventListener("click", resetGame)
+  aboutButton.addEventListener("click", (link) => {
+    link.preventDefault()
+    checkInProgress(false, true)
+  })
 }
 
-let resetGame = (skipCheck) => {
-  if (!skipCheck) {
-    checkInProgress(true)
-    return
-  }
+let resetGame = () => {
+
   clearGame(gameDiv, scoreDiv)
   gameStarted = false;
   startButton.innerHTML = `
     <h1>Start Game</h1>
-  `
+    `
   startButton.classList.toggle("reset_button")
   startButton.classList.toggle("start_button")
   console.log("Game Has been RESET")
@@ -61,7 +50,7 @@ let resetGame = (skipCheck) => {
 
 startButton.addEventListener("click", () => {
   if (gameStarted) {
-    resetGame()
+    checkInProgress()
   } else {
     startGame()
   }
@@ -71,7 +60,6 @@ startButton.addEventListener("click", () => {
 //get number of weapons
 noWeaponsButton.addEventListener("change", () => {
   noWeapons = document.getElementById("no-weapons").value
-  console.log(`no weapons: ${noWeapons}`)
   startGame()
 })
 
@@ -108,12 +96,10 @@ let showGame = () => {
   gameDiv.appendChild(html)
   //add event listeners to all instances of selButton class
   let buttons = document.querySelectorAll(".selButton, .gameIcon").values()
-  console.log(`Buttons: ${buttons}`)
   for (let button of buttons) {
     button.addEventListener('click', () => {
       weapon = userWeapon(button.classList[0])
       confirm()
-      console.log(`Weapon is ${weapon}`)
     })
   }
 }
@@ -124,14 +110,12 @@ let showGame = () => {
 let computerMove = (noWeapons = 3) => {
   let i = Math.floor(Math.random() * noWeapons)
   aiWeapon = gameData[i].name
-  console.log(`AI weapon is ${aiWeapon}`)
   return aiWeapon
 }
 /**
  * Returns user selected weapon
  */
 let userWeapon = weapon => {
-  console.log(`User weapon is ${weapon}`)
   return weapon
 }
 
@@ -279,7 +263,6 @@ let displayIcons = () => {
         `
     changeCssVars()
   }
-  console.log(html)
   gameDiv.appendChild(html)
 }
 
@@ -290,18 +273,27 @@ let changeCssVars = () => {
   let root = document.documentElement
   let incr = 360 / noWeapons
   let a0 = -90
-  console.log(`a0 is: ${a0}`)
   for (let i = 0; i < noWeapons; i++) {
     root.style.setProperty(`--angle${i}`, a0 + i * parseInt(incr) + "deg")
-    console.log(getComputedStyle(root).getPropertyValue(`--angle${i}`) + `is  angle ${i}`)
   }
 }
 
-let checkInProgress = (check) => {
-  if (aiScore > 0 || playerScore > 0 || check) {
-    let html = document.createElement("div")
-    html.classList.add("warning_div")
-    html.innerHTML = `
+let checkInProgress = (noQuery = false, about = false) => {
+  if (aiScore > 0 || playerScore > 0) {
+    if (!noQuery) {
+      queryLeave(about)
+    }
+    return true
+  } else {
+    resetGame()
+    return false
+  }
+}
+
+let queryLeave = (about = false) => {
+  let html = document.createElement("div")
+  html.classList.add("warning_div")
+  html.innerHTML = `
       <div class="warning_div_inner">
         <h1>Are you sure you want to leave?</h1>
         <p>
@@ -317,17 +309,17 @@ let checkInProgress = (check) => {
         </div>
       </div>
     `
-    body.appendChild(html)
-    let warningDiv = document.getElementsByClassName("warning_div")[0]
-    document.getElementsByClassName("check_stay")[0].addEventListener("click", () => {
-      body.removeChild(warningDiv)
-    })
-    document.getElementsByClassName("check_leave")[0].addEventListener("click", () => {
-      resetGame(true)
-      body.removeChild(warningDiv)
-    })
-    return true
-  } else {
-    return false
-  }
+  body.appendChild(html)
+  let warningDiv = document.getElementsByClassName("warning_div")[0]
+  // warningDiv.addEventListener("")
+  document.getElementsByClassName("check_stay")[0].addEventListener("click", () => {
+    body.removeChild(warningDiv)
+  })
+  document.getElementsByClassName("check_leave")[0].addEventListener("click", () => {
+    resetGame()
+    if (about) {
+      window.location.replace("about.html")
+    }
+    body.removeChild(warningDiv)
+  })
 }
