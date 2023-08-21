@@ -4,7 +4,7 @@ const gameDiv = document.getElementById("game-div")
 const startButton = document.getElementsByClassName("start_button")[0]
 const scoreDiv = document.getElementById("score-div")
 const aboutButton = document.getElementById("about")
-let noWeaponsButton = document.getElementById("no-weapons")
+let numberOfWeaponsButton = document.getElementById("no-weapons")
 let resetButton
 let weapon
 let playerScore
@@ -12,8 +12,9 @@ let aiScore
 let aiWeapon
 let player
 let bestOf
-let noWeapons = 3
+let numberOfWeapons = 3
 let gameStarted = false
+let maxScore = document.getElementById("max-score")
 
 /**
  * Sets variables to 0 and runs game etc etc 
@@ -25,8 +26,8 @@ let startGame = () => {
   // }
   // clearGame(gameDiv)
   fetchData("assets/js/data.json")
-
-  playerScore = aiScore = roundNo = 0
+  numberOfWeapons = document.getElementById("no-weapons").value
+  playerScore = aiScore = roundNumber = 0
   startButton.innerHTML = `
     <h1>Reset</h1>
   `
@@ -45,7 +46,6 @@ let resetGame = () => {
     `
   startButton.classList.toggle("reset_button")
   startButton.classList.toggle("start_button")
-  console.log("Game Has been RESET")
 }
 
 startButton.addEventListener("click", () => {
@@ -58,14 +58,14 @@ startButton.addEventListener("click", () => {
 
 // startButton.addEventListener("click", startGame)
 //get number of weapons
-noWeaponsButton.addEventListener("change", () => {
-  noWeapons = document.getElementById("no-weapons").value
-  startGame()
+numberOfWeaponsButton.addEventListener("change", () => {
+  if (gameStarted) {
+    checkInProgress()
+  } else {
+    startGame()
+  }
+  document.getElementById("no-weapons").value = numberOfWeapons
 })
-
-// resetButton.addEventListener("click", () => {
-//   clearGame(gameDiv, scoreDiv)
-// })
 
 /**
  * fetch data from specified json file url
@@ -84,31 +84,32 @@ let fetchData = url => {
  */
 let showGame = () => {
   displayIcons()
-  let html = document.createElement("div")
-  for (let i = 0; i < noWeapons; i++) {
-    html.innerHTML += `
-            <div class="${gameData[i].name} sel_button">
-                <h2>${gameData[i].name}</h2>
-            </div>
-            `
-  }
-  html.id = "selection"
-  gameDiv.appendChild(html)
+  // let html = document.createElement("div")
+  // for (let i = 0; i < numberOfWeapons; i++) {
+  //   html.innerHTML += `
+  //           <div class="${gameData[i].name} sel_button">
+  //               <h2>${gameData[i].name}</h2>
+  //           </div>
+  //           `
+  // }
+  // html.id = "selection"
+  // gameDiv.appendChild(html)
   //add event listeners to all instances of sel_button class
-  let buttons = document.querySelectorAll(".sel_button, .gameIcon").values()
+  let buttons = document.querySelectorAll(".sel_button, .game_icon").values()
   for (let button of buttons) {
     button.addEventListener('click', () => {
       weapon = userWeapon(button.classList[0])
-      confirm()
+      // confirm()
+      gamePlay()
     })
   }
 }
 
 /**
- * randomly generates the computer's move based on game noWeapons
+ * randomly generates the computer's move based on game numberOfWeapons
  */
-let computerMove = (noWeapons = 3) => {
-  let i = Math.floor(Math.random() * noWeapons)
+let computerMove = (numberOfWeapons = 3) => {
+  let i = Math.floor(Math.random() * numberOfWeapons)
   aiWeapon = gameData[i].name
   return aiWeapon
 }
@@ -152,7 +153,7 @@ let confirm = () => {
 /**
  * Returns win, lose, or draw, based on outcome of game
  */
-let playerWin = () => {
+let player_win = () => {
   let res
   if (aiWeapon === player.name) {
     res = "draw"
@@ -168,10 +169,10 @@ let playerWin = () => {
 let displayWin = (res) => {
   let html = document.createElement("div")
   html.innerHTML = `
-        <h1 class = "ai${res}">
+        <h1 class = "ai_${res}">
             AI : ${aiWeapon}
         </h1>
-        <h1 class = "player${res}">
+        <h1 class = "player_${res}">
             Player: ${player.name}
         </h1>`
 
@@ -184,13 +185,13 @@ let displayWin = (res) => {
       html.innerHTML +=
         `<h2>You win, you beautiful biscuit</h2>`
       playerScore++
-      roundNo++
+      roundNumber++
       break
     case "lose":
       html.innerHTML +=
         `<h2>Better luck next time, you silly sausage</h2>`
       aiScore++
-      roundNo++
+      roundNumber++
   }
 
   showScores()
@@ -210,12 +211,14 @@ let displayWin = (res) => {
     clearGame(gameDiv)
     showGame()
   })
+
+  checkEnd()
 }
 
 let gamePlay = () => {
   computerMove()
   player = gameData.find(w => weapon === w.name)
-  displayWin(playerWin())
+  displayWin(player_win())
 }
 
 /**
@@ -230,10 +233,56 @@ let clearGame = (...args) => {
 }
 
 let checkEnd = () => {
-  let maxScore = Math.ceil(bestOf / 2)
-  // if (aiScore === ) {
-  // 
-  // }
+  if (aiScore === maxScore) {
+    endGame(0)
+  } else if (playerScore === maxScore) {
+    endGame(1)
+  }
+}
+
+let endGame = (winner) => {
+  let html = document.createElement("div")
+  html.classList.add("win_screen warning_div")
+  if (winner === 1) {
+
+    html.innerHTML = `
+        <div class="warning_div_inner">
+          <h1>Congtrats</h1>
+          <p>
+            You did it
+          </p>
+          <div class="check_buttons">
+            <div class="check_leave check_button button">
+              <h3>Leave</h3>
+            </div>
+            <div class="check_stay check_button button">
+              <h3>Stay</h3>
+            </div>
+          </div>
+        </div>
+      `
+  } else {
+    html.innerHTML = `
+        <div class="warning_div_inner">
+          <h1>Oh no!</h1>
+          <p>
+            You did no do it
+          </p>
+          <p>
+            Don't let this have any impact of your sense of self worth <3
+          </p>
+          <div class="check_buttons">
+            <div class="check_leave check_button button">
+              <h3>Leave</h3>
+            </div>
+            <div class="check_stay check_button button">
+              <h3>Stay</h3>
+            </div>
+          </div>
+        </div>
+      `
+  }
+  body.appendChild(html)
 }
 
 /**
@@ -245,7 +294,7 @@ let showScores = () => {
   html.innerHTML = `
         Player Score: ${playerScore} <br>
         AI Score: ${aiScore} <br>
-        Round no: ${roundNo}
+        Round no: ${roundNumber}
     `
   scoreDiv.appendChild(html)
 }
@@ -254,12 +303,12 @@ let showScores = () => {
  * Displays visual icons of weapons
  */
 let displayIcons = () => {
-  // clearGame(gameIconsDiv)
+  // clearGame(game_iconsDiv)
   let html = document.createElement("div")
-  html.classList.add(`circle`, `weapons${noWeapons}`)
-  for (let i = 0; i < noWeapons; i++) {
+  html.classList.add(`circle`, `weapons${numberOfWeapons}`)
+  for (let i = 0; i < numberOfWeapons; i++) {
     html.innerHTML += `
-            <img class="${gameData[i].name} angle${i} gameIcon" src="${gameData[i].img}" alt="${gameData[i].alt}">
+            <img class="${gameData[i].name} angle${i} game_icon" src="${gameData[i].img}" alt="${gameData[i].alt}">
         `
     changeCssVars()
   }
@@ -271,9 +320,9 @@ let displayIcons = () => {
  */
 let changeCssVars = () => {
   let root = document.documentElement
-  let incr = 360 / noWeapons
+  let incr = 360 / numberOfWeapons
   let a0 = -90
-  for (let i = 0; i < noWeapons; i++) {
+  for (let i = 0; i < numberOfWeapons; i++) {
     root.style.setProperty(`--angle${i}`, a0 + i * parseInt(incr) + "deg")
   }
 }
