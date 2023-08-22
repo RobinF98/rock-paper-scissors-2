@@ -14,7 +14,9 @@ let player
 let bestOf
 let numberOfWeapons = 3
 let gameStarted = false
-let maxScore = document.getElementById("max-score")
+const maxScoreElement = document.getElementById("max-score")
+let maxScore
+const moveTraceOl = document.getElementById("move-trace-ol")
 
 /**
  * Sets variables to 0 and runs game etc etc 
@@ -25,6 +27,8 @@ let startGame = () => {
   //   return
   // }
   // clearGame(gameDiv)
+  maxScore = parseInt(document.getElementById("max-score").value)
+  console.log("max score is " + maxScore)
   fetchData("assets/js/data.json")
   numberOfWeapons = document.getElementById("no-weapons").value
   playerScore = aiScore = roundNumber = 0
@@ -34,12 +38,13 @@ let startGame = () => {
   aboutButton.addEventListener("click", (link) => {
     link.preventDefault()
     checkInProgress(false, true)
+
   })
 }
 
 let resetGame = () => {
 
-  clearGame(gameDiv, scoreDiv)
+  clearGame(gameDiv, scoreDiv, moveTraceOl)
   gameStarted = false;
   startButton.innerHTML = `
     <h1>Start Game</h1>
@@ -112,6 +117,7 @@ let computerMove = (numberOfWeapons = 3) => {
   let i = Math.floor(Math.random() * numberOfWeapons)
   aiWeapon = gameData[i].name
   return aiWeapon
+  // return "paper" //holsdfsdfiosdfsjdf FINC FIC FICFIXFXIFIXFIXFIXFIX
 }
 /**
  * Returns user selected weapon
@@ -195,6 +201,7 @@ let displayWin = (res) => {
   }
 
   showScores()
+  moveTrace()
 
   html.innerHTML += `
         <div class = "replay">
@@ -234,29 +241,28 @@ let clearGame = (...args) => {
 
 let checkEnd = () => {
   if (aiScore === maxScore) {
-    endGame(0)
+    console.log("Robots Win")
+    endGame(false)
   } else if (playerScore === maxScore) {
-    endGame(1)
+    console.log("Player Win")
+    endGame(true)
   }
 }
 
-let endGame = (winner) => {
+let endGame = (playerWin) => {
   let html = document.createElement("div")
-  html.classList.add("win_screen warning_div")
-  if (winner === 1) {
+  html.classList.add("win_screen", "warning_div")
+  if (playerWin) {
 
     html.innerHTML = `
         <div class="warning_div_inner">
-          <h1>Congtrats</h1>
+          <h1>Congrats</h1>
           <p>
             You did it
           </p>
           <div class="check_buttons">
             <div class="check_leave check_button button">
               <h3>Leave</h3>
-            </div>
-            <div class="check_stay check_button button">
-              <h3>Stay</h3>
             </div>
           </div>
         </div>
@@ -269,20 +275,29 @@ let endGame = (winner) => {
             You did no do it
           </p>
           <p>
-            Don't let this have any impact of your sense of self worth <3
+            Don't let this have any impact on your sense of self worth <3
           </p>
           <div class="check_buttons">
             <div class="check_leave check_button button">
               <h3>Leave</h3>
             </div>
-            <div class="check_stay check_button button">
-              <h3>Stay</h3>
-            </div>
           </div>
-        </div>
-      `
+          `
+    //   <div class="check_stay check_button button">
+    //     <h3>Stay</h3>
+    //   </div>
+    // </div>
   }
   body.appendChild(html)
+  let winScreen = document.getElementsByClassName("win_screen")[0]
+  // warningDiv.addEventListener("")
+  // document.getElementsByClassName("check_stay")[0].addEventListener("click", () => {
+  //   body.removeChild(winScreen)
+  // })
+  document.getElementsByClassName("check_leave")[0].addEventListener("click", () => {
+    resetGame()
+    body.removeChild(winScreen)
+  })
 }
 
 /**
@@ -297,6 +312,14 @@ let showScores = () => {
         Round no: ${roundNumber}
     `
   scoreDiv.appendChild(html)
+}
+
+let moveTrace = () => {
+  let html = document.createElement("li")
+  html.innerHTML = `
+    Round ${roundNumber} Player ${player.name} AI ${aiWeapon}
+  `
+  moveTraceOl.appendChild(html)
 }
 
 /**
