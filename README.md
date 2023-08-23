@@ -9,6 +9,7 @@ An interactive web game for playing Rock, Paper, Scissors, with a twist
 ---
 
 * Set difficulty selector reverts to previous value when game resets due to changing difficulty
+  * Fix: Removed code to set difficulty selector to old value
 
 ## Credits
 
