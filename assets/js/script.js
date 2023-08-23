@@ -41,7 +41,9 @@ let startGame = () => {
 
   })
 }
-
+/** 
+ * This function resets the game to its unitialized state
+ */
 let resetGame = () => {
 
   clearGame(gameDiv, scoreDiv, moveTraceOl)
@@ -69,7 +71,6 @@ numberOfWeaponsButton.addEventListener("change", () => {
   } else {
     startGame()
   }
-  document.getElementById("no-weapons").value = numberOfWeapons
 })
 
 /**
@@ -169,8 +170,11 @@ let player_win = () => {
   return res
 }
 
-/**
- * displays results screen after every round
+/** 
+ * Displayes win screen after every round
+ * @summary Replaces contents of gameDiv with HTML stating a loss, a win, or a draw for the player, depending on the res parameter. Runs showScores and moveTrace to update scores and move history.
+ * Runs checkEnd to see if game end criteria has been reached. Adds a clickable HTML element that will remove the round win screen and run showGame to continue with the next round.
+ * @param {String} res - The result of the round just played (draw/win/lose)
  */
 let displayWin = (res) => {
   let html = document.createElement("div")
@@ -228,8 +232,9 @@ let gamePlay = () => {
   displayWin(player_win())
 }
 
-/**
- * Clears container div
+/** 
+ * This function clears the children of the inputted parameter HTML elements
+ * @param {HTMLElement} elements - The HTML element/s to be emptied
  */
 let clearGame = (...args) => {
   for (let i = 0; i < args.length; i++) {
@@ -238,7 +243,10 @@ let clearGame = (...args) => {
     }
   }
 }
-
+/** 
+ * This function checks if the max score has been reached by either the player or the computer
+ * @summary Runs endGame function with parameter false if the computer won, or parameter true of the player won
+ */
 let checkEnd = () => {
   if (aiScore === maxScore) {
     console.log("Robots Win")
@@ -248,7 +256,11 @@ let checkEnd = () => {
     endGame(true)
   }
 }
-
+/** 
+ * This function creates the win screen.
+ * @summary Displays text based on winner of the game, with a button to leave and start game again
+ * @param {boolean} playerWin - true if player won, false if computer won
+ */
 let endGame = (playerWin) => {
   let html = document.createElement("div")
   html.classList.add("win_screen", "warning_div")
