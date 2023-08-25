@@ -6,6 +6,7 @@ const scoreDiv = document.getElementById("score-div")
 const aboutButton = document.getElementById("about")
 let numberOfWeaponsButton = document.getElementById("no-weapons")
 let resetButton
+let roundNumber
 let weapon
 let playerScore
 let aiScore
@@ -17,6 +18,12 @@ let gameStarted = false
 const maxScoreElement = document.getElementById("max-score")
 let maxScore
 const moveTraceOl = document.getElementById("move-trace-ol")
+const descriptionDiv = document.getElementById("description")
+const helpButton = document.getElementById("help")
+
+helpButton.addEventListener("click", () => {
+  descriptionDiv.classList.toggle("hide")
+})
 
 /**
  * Sets variables to 0 and runs game etc etc 
@@ -85,8 +92,11 @@ let fetchData = url => {
     })
 }
 
-/**
- * Sets up game div with event listeners
+/** 
+ * Brief description of the function here.
+ * @summary If the description is long, write your summary here. Otherwise, feel free to remove this.
+ * @param {ParamDataTypeHere} parameterNameHere - Brief description of the parameter here. Note: For other notations of data types, please refer to JSDocs: DataTypes command.
+ * @return {ReturnValueDataTypeHere} Brief description of the returning value here.
  */
 let showGame = () => {
   displayIcons()
@@ -171,7 +181,7 @@ let player_win = () => {
 }
 
 /** 
- * Displayes win screen after every round
+ * Displays win screen after every round
  * @summary Replaces contents of gameDiv with HTML stating a loss, a win, or a draw for the player, depending on the res parameter. Runs showScores and moveTrace to update scores and move history.
  * Runs checkEnd to see if game end criteria has been reached. Adds a clickable HTML element that will remove the round win screen and run showGame to continue with the next round.
  * @param {String} res - The result of the round just played (draw/win/lose)
@@ -193,23 +203,24 @@ let displayWin = (res) => {
       break
     case "win":
       html.innerHTML +=
-        `<h2>You win, you beautiful biscuit</h2>`
+        `<h2>Player Wins</h2>`
       playerScore++
       roundNumber++
       break
     case "lose":
       html.innerHTML +=
-        `<h2>Better luck next time, you silly sausage</h2>`
+        `<h2>AI Wins</h2>`
       aiScore++
       roundNumber++
   }
+  html.classList.add("show_round_win")
 
   showScores()
   moveTrace()
 
   html.innerHTML += `
-        <div class = "replay">
-            <h3>Onwards...</h3>
+        <div class = "replay button">
+            <h3>Continue</h3>
         </div>
     `
   html.classList.add("winDisplay")
@@ -329,7 +340,7 @@ let showScores = () => {
 let moveTrace = () => {
   let html = document.createElement("li")
   html.innerHTML = `
-    Round ${roundNumber} Player ${player.name} AI ${aiWeapon}
+    Round ${roundNumber} || Player ${player.name} || AI ${aiWeapon}
   `
   moveTraceOl.appendChild(html)
 }
