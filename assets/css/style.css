@@ -4,6 +4,7 @@
   --angle2: ;
   --angle3: ;
   --angle4: ;
+  --icon_offset: 300px;
   /* --pink: #c40a71;
    */
   --light_pink: #f26a8d;
@@ -31,14 +32,16 @@ footer {
   display: flex;
   flex-direction: column;
   padding: 40px 0 0 0;
-
   width: var(--header_width);
   height: 100vh;
   background-color: var(--light_pink);
-  position: sticky;
   top: 0;
   box-shadow: 0 0 10px black;
   /* justify-content: center; */
+}
+
+header {
+  position: sticky;
 }
 
 .nav {
@@ -64,7 +67,7 @@ a {
   color: inherit;
 }
 
-.description {
+#description {
   border: 1px solid black;
   border-radius: 20px;
   padding: 10px;
@@ -120,6 +123,7 @@ label {
   position: relative;
   width: 100%;
   height: 450px;
+
   /* background-color: rgb(34, 95, 150); */
 
   display: flex;
@@ -137,6 +141,13 @@ label {
   border: black solid 1px;
   padding: 10px;
   justify-content: center;
+  margin: 10px;
+}
+
+.show_round_win {
+  border: 1px black solid;
+  border-radius: 20px;
+  padding: 20px;
 }
 
 .sel_button {
@@ -162,9 +173,9 @@ label {
 }
 
 /* Hides elements */
-.hide {
+/* .hide {
   display: none;
-}
+} */
 
 /* .unclick {
     pointer-events: none;
@@ -172,12 +183,12 @@ label {
 
 .player_win,
 .ai_lose {
-  color: greenyellow;
+  color: #77DD77;
 }
 
 .player_lose,
 .ai_win {
-  color: red;
+  color: var(--light_pink);
 }
 
 .player_draw,
@@ -201,53 +212,61 @@ label {
   top: 50%;
   margin: -50px;
   cursor: pointer;
-  /* padding: 30px 20px 20px 20px; */
-  /* background-color: red; */
-  /* border-radius: 5000px; */
-  transition: ease-in-out 200ms;
-  /* filter: drop-shadow(0 5px darkslategray) */
-  box-shadow: 5px 0 2px red;
+  transition: ease-in-out 100ms;
 }
 
 .game_icon:hover {
-  translate: 0 5px;
-  /* filter: drop-shadow(0 0 2px darkslategray) */
+  /* filter: invert(61%) sepia(33%) saturate(1828%) hue-rotate(303deg) brightness(94%) contrast(99%) drop-shadow(0 0 5px); */
+  filter: invert(100%) sepia(100%) saturate(1%) hue-rotate(200deg) brightness(103%) contrast(101%) drop-shadow(0 0 3px #ee688d) drop-shadow(0 0 9px #e787a2);
 }
 
+
 .circle {
+  z-index: 50;
   margin-top: 40px;
   position: absolute;
   align-self: center;
   width: 600px;
   height: 600px;
-
+  /* animation: rotation 7s linear infinite */
 }
 
+/* 
+@keyframes rotation {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg)
+  }
+} */
+
 .angle0 {
-  transform: rotate(var(--angle0)) translate(300px) rotate(calc(0deg - var(--angle0)));
+  transform: rotate(var(--angle0)) translate(var(--icon_offset)) rotate(calc(0deg - var(--angle0)));
 }
 
 .angle1 {
-  transform: rotate(var(--angle1)) translate(300px) rotate(calc(0deg - var(--angle1)));
+  transform: rotate(var(--angle1)) translate(var(--icon_offset)) rotate(calc(0deg - var(--angle1)));
 }
 
 .angle2 {
-  transform: rotate(var(--angle2)) translate(300px) rotate(calc(0deg - var(--angle2)));
+  transform: rotate(var(--angle2)) translate(var(--icon_offset)) rotate(calc(0deg - var(--angle2)));
 }
 
 .angle3 {
-  transform: rotate(var(--angle3)) translate(300px) rotate(calc(0deg - var(--angle3)));
+  transform: rotate(var(--angle3)) translate(var(--icon_offset)) rotate(calc(0deg - var(--angle3)));
 }
 
 .angle4 {
-  transform: rotate(var(--angle4)) translate(300px) rotate(calc(0deg - var(--angle4)));
+  transform: rotate(var(--angle4)) translate(var(--icon_offset)) rotate(calc(0deg - var(--angle4)));
 }
 
 .warning_div {
   position: fixed;
   top: 0;
   left: 0;
-  z-index: 11;
+  z-index: 75;
   width: 100%;
   height: 100vh;
   display: flex;
@@ -310,4 +329,43 @@ label {
 
 .about_about {
   width: 600px;
+}
+
+help {
+  display: none;
+}
+
+@media screen and (max-width: 1000px) {
+  :root {
+    --icon_offset: 30vw;
+  }
+
+  body {
+    position: relative;
+    flex-direction: column;
+  }
+
+  #help {
+    display: flex;
+  }
+
+  header,
+  footer {
+    height: fit-content;
+    width: 100vw;
+  }
+
+  .hide {
+    display: none;
+  }
+
+  header {
+    position: stick;
+  }
+
+  footer {
+    /* position: absolute;
+    bottom: 0; */
+  }
+
 }
