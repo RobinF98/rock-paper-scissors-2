@@ -360,12 +360,7 @@ help {
   }
 
   header {
-    position: stick;
-  }
-
-  footer {
-    /* position: absolute;
-    bottom: 0; */
+    position: sticky;
   }
 
 }
