@@ -25,15 +25,12 @@ helpButton.addEventListener("click", () => {
   descriptionDiv.classList.toggle("hide")
 })
 
-/**
- * Sets variables to 0 and runs game etc etc 
+/** 
+ * This funtion sets the game up based on the user selected settings.
+ * @summary Sets the maxScore and numberOfWeapons variables, and sets intial scores to 0. Runs fetchData() to start game
  */
 let startGame = () => {
   gameStarted = true;
-  // if (checkInProgress()) {
-  //   return
-  // }
-  // clearGame(gameDiv)
   maxScore = parseInt(document.getElementById("max-score").value)
   console.log("max score is " + maxScore)
   fetchData("assets/js/data.json")
@@ -49,7 +46,8 @@ let startGame = () => {
   })
 }
 /** 
- * This function resets the game to its unitialized state
+ * This function resets the game to its initial state.
+ * @summary Runs clearGame() on various divs to reset them, and toggles the start button between displayin "Start Game" and "Reset".
  */
 let resetGame = () => {
 
@@ -70,7 +68,6 @@ startButton.addEventListener("click", () => {
   }
 })
 
-// startButton.addEventListener("click", startGame)
 //get number of weapons
 numberOfWeaponsButton.addEventListener("change", () => {
   if (gameStarted) {
@@ -80,8 +77,9 @@ numberOfWeaponsButton.addEventListener("change", () => {
   }
 })
 
-/**
- * fetch data from specified json file url
+/** 
+ * This function fetches data from the specified JSON file, and puts it in the gameData array. Runs showGame() once data is fetched.
+ * @param {String} url - The url of the JSON file.
  */
 let fetchData = url => {
   const data = fetch(url)
@@ -93,10 +91,8 @@ let fetchData = url => {
 }
 
 /** 
- * Brief description of the function here.
- * @summary If the description is long, write your summary here. Otherwise, feel free to remove this.
- * @param {ParamDataTypeHere} parameterNameHere - Brief description of the parameter here. Note: For other notations of data types, please refer to JSDocs: DataTypes command.
- * @return {ReturnValueDataTypeHere} Brief description of the returning value here.
+ * This function runs displayIcons() to show the game icons, and adds event listeners to each icon before running gamePlay() to run the game
+ * @summary Will also set the weapon variable to the user selected weapon in the event listener function
  */
 let showGame = () => {
   displayIcons()
@@ -114,61 +110,58 @@ let showGame = () => {
   let buttons = document.querySelectorAll(".sel_button, .game_icon").values()
   for (let button of buttons) {
     button.addEventListener('click', () => {
-      weapon = userWeapon(button.classList[0])
+
+      // set user weapon
+      weapon = button.classList[0]
       // confirm()
       gamePlay()
     })
   }
 }
-
-/**
- * randomly generates the computer's move based on game numberOfWeapons
+/** 
+ * This function randomly generates the computer move from a list of weapons
+ * @return {String} Returns a string with the computer move.
  */
 let computerMove = (numberOfWeapons = 3) => {
   let i = Math.floor(Math.random() * numberOfWeapons)
   aiWeapon = gameData[i].name
   return aiWeapon
-  // return "paper" //holsdfsdfiosdfsjdf FINC FIC FICFIXFXIFIXFIXFIXFIX
-}
-/**
- * Returns user selected weapon
- */
-let userWeapon = weapon => {
-  return weapon
 }
 
-/**
- * Creates div to confirm user move
- */
-let confirm = () => {
-  let confirmDiv = document.createElement("div")
-  confirmDiv.innerHTML +=
-    `
-        <h1>You chose ${weapon}</h1>
-        <h2>Are you absolutely sure??</h2>
-        <div class = "confirm__yes">
-            <h3>Yes</h3>
-        </div>
-        <div class = "confirm__no">
-            <h3>No</h3>
-        </div>
-    `
-  confirmDiv.classList.add("confirm")
-  gameDiv.appendChild(confirmDiv)
-  let confirm = document.getElementsByClassName("confirm")[0]
-  let confirmNo = document.getElementsByClassName("confirm__no")[0]
-  confirmNo.addEventListener("click", () => {
-    gameDiv.removeChild(confirm)
-  })
+// /**
+//  * Creates div to confirm user move
+//  */
+// let confirm = () => {
+//   let confirmDiv = document.createElement("div")
+//   confirmDiv.innerHTML +=
+//     `
+//         <h1>You chose ${weapon}</h1>
+//         <h2>Are you absolutely sure??</h2>
+//         <div class = "confirm__yes">
+//             <h3>Yes</h3>
+//         </div>
+//         <div class = "confirm__no">
+//             <h3>No</h3>
+//         </div>
+//     `
+//   confirmDiv.classList.add("confirm")
+//   gameDiv.appendChild(confirmDiv)
+//   let confirm = document.getElementsByClassName("confirm")[0]
+//   let confirmNo = document.getElementsByClassName("confirm__no")[0]
+//   confirmNo.addEventListener("click", () => {
+//     gameDiv.removeChild(confirm)
+//   })
 
-  let confirmYes = document.getElementsByClassName("confirm__yes")[0]
-  confirmYes.addEventListener("click", () => {
-    gamePlay()
-  })
-}
+//   let confirmYes = document.getElementsByClassName("confirm__yes")[0]
+//   confirmYes.addEventListener("click", () => {
+//     gamePlay()
+//   })
+// }
 
-/**
- * Returns win, lose, or draw, based on outcome of game
+/** 
+ * This function calculates the outcome of every round
+ * @summary The function checks the player weapon against the computer weapon, and returns "win" if the player won, "lose" if the player lost, or "draw" if the round was a draw
+ * @return {String} Returns the result in the form of a String
  */
 let player_win = () => {
   let res
@@ -237,6 +230,12 @@ let displayWin = (res) => {
   checkEnd()
 }
 
+/** 
+ * This function runs computerMove()
+ * @summary If the description is long, write your summary here. Otherwise, feel free to remove this.
+ * @param {ParamDataTypeHere} parameterNameHere - Brief description of the parameter here. Note: For other notations of data types, please refer to JSDocs: DataTypes command.
+ * @return {ReturnValueDataTypeHere} Brief description of the returning value here.
+ */
 let gamePlay = () => {
   computerMove()
   player = gameData.find(w => weapon === w.name)
