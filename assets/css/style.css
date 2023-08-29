@@ -31,13 +31,12 @@ header,
 footer {
   display: flex;
   flex-direction: column;
-  padding: 40px 0 0 0;
   width: var(--header_width);
   height: 100vh;
   background-color: var(--light_pink);
   top: 0;
   box-shadow: 0 0 10px black;
-  /* justify-content: center; */
+  padding: 0 10px 0 10px;
 }
 
 header {
@@ -53,18 +52,13 @@ header {
   align-items: center;
 }
 
-/* 
-.navLink {
-  background-color: var(--light_pink);
-  margin: 20px 20px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-} */
-
 a {
   text-decoration: none;
   color: inherit;
+}
+
+li a {
+  border-bottom: 1px black solid;
 }
 
 #description {
@@ -74,20 +68,13 @@ a {
   margin: 30px 10px;
 }
 
-/* 
-.active {
-  background-color: salmon;
-} */
-
 main {
   padding-top: 20px;
   display: flex;
   flex-direction: column;
   flex: 1 0 auto;
   align-items: center;
-  /* width: 50vw */
 }
-
 
 .start_button {
   /* margin-top: 200px; */
@@ -183,7 +170,7 @@ label {
 
 .player_win,
 .ai_lose {
-  color: #77DD77;
+  color: #45ff45;
 }
 
 .player_lose,
@@ -291,6 +278,7 @@ label {
   padding: 30px;
   /* align-items: left; */
   border-radius: 20px;
+  border: 1px black solid;
 }
 
 
@@ -344,7 +332,7 @@ label {
   align-self: center;
   position: absolute;
   bottom: 110px;
-
+  padding: 10px;
 }
 
 @media screen and (max-width: 1000px) {
@@ -352,9 +340,21 @@ label {
     --icon_offset: 30vw;
   }
 
+  .setup {
+    padding: 0;
+  }
+
+  .nav {
+    padding: 10px 0 10px 0;
+  }
+
   body {
     position: relative;
     flex-direction: column;
+  }
+
+  main {
+    width: 100%
   }
 
   #help {
@@ -365,6 +365,7 @@ label {
   footer {
     height: fit-content;
     width: 100vw;
+    padding: 0;
   }
 
   .hide {
