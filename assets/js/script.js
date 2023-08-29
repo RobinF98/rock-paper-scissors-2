@@ -275,10 +275,10 @@ let endGame = (playerWin) => {
         <div class="warning_div_inner">
           <h1>Oh no!</h1>
           <p>
-            You did no do it
+            The computer won
           </p>
           <p>
-            Don't let this have any impact on your sense of self worth <3
+            Don't stress, you can always try again <3
           </p>
           <div class="check_buttons">
             <div class="check_leave check_button button">
