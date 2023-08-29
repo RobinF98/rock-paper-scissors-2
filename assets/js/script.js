@@ -45,6 +45,7 @@ let startGame = () => {
 
   })
 }
+
 /** 
  * This function resets the game to its initial state.
  * @summary Runs clearGame() on various divs to reset them, and toggles the start button between displayin "Start Game" and "Reset".
@@ -60,6 +61,10 @@ let resetGame = () => {
   startButton.classList.toggle("start_button")
 }
 
+/** 
+ * This event listener runs when the start button is clicked to start the game.
+ * @summary Checks if game is in progress, and prompts the user if they want to leave and start a new game.
+ */
 startButton.addEventListener("click", () => {
   if (gameStarted) {
     checkInProgress()
@@ -68,7 +73,10 @@ startButton.addEventListener("click", () => {
   }
 })
 
-//get number of weapons
+/** 
+ * This event listener runs when user changes the number of weapons (difficulty) setting.
+ * @summary Checks if game is in progress, and prompts the user if they want to leave and start a new game with new difficulty setting
+ */
 numberOfWeaponsButton.addEventListener("change", () => {
   if (gameStarted) {
     checkInProgress()
@@ -118,6 +126,7 @@ let showGame = () => {
     })
   }
 }
+
 /** 
  * This function randomly generates the computer move from a list of weapons
  * @return {String} Returns a string with the computer move.
@@ -127,36 +136,6 @@ let computerMove = (numberOfWeapons = 3) => {
   aiWeapon = gameData[i].name
   return aiWeapon
 }
-
-// /**
-//  * Creates div to confirm user move
-//  */
-// let confirm = () => {
-//   let confirmDiv = document.createElement("div")
-//   confirmDiv.innerHTML +=
-//     `
-//         <h1>You chose ${weapon}</h1>
-//         <h2>Are you absolutely sure??</h2>
-//         <div class = "confirm__yes">
-//             <h3>Yes</h3>
-//         </div>
-//         <div class = "confirm__no">
-//             <h3>No</h3>
-//         </div>
-//     `
-//   confirmDiv.classList.add("confirm")
-//   gameDiv.appendChild(confirmDiv)
-//   let confirm = document.getElementsByClassName("confirm")[0]
-//   let confirmNo = document.getElementsByClassName("confirm__no")[0]
-//   confirmNo.addEventListener("click", () => {
-//     gameDiv.removeChild(confirm)
-//   })
-
-//   let confirmYes = document.getElementsByClassName("confirm__yes")[0]
-//   confirmYes.addEventListener("click", () => {
-//     gamePlay()
-//   })
-// }
 
 /** 
  * This function calculates the outcome of every round
@@ -253,6 +232,7 @@ let clearGame = (...args) => {
     }
   }
 }
+
 /** 
  * This function checks if the max score has been reached by either the player or the computer
  * @summary Runs endGame function with parameter false if the computer won, or parameter true of the player won
@@ -266,6 +246,7 @@ let checkEnd = () => {
     endGame(true)
   }
 }
+
 /** 
  * This function creates the win screen.
  * @summary Displays text based on winner of the game, with a button to leave and start game again
@@ -305,25 +286,18 @@ let endGame = (playerWin) => {
             </div>
           </div>
           `
-    //   <div class="check_stay check_button button">
-    //     <h3>Stay</h3>
-    //   </div>
-    // </div>
   }
   body.appendChild(html)
   let winScreen = document.getElementsByClassName("win_screen")[0]
-  // warningDiv.addEventListener("")
-  // document.getElementsByClassName("check_stay")[0].addEventListener("click", () => {
-  //   body.removeChild(winScreen)
-  // })
   document.getElementsByClassName("check_leave")[0].addEventListener("click", () => {
     resetGame()
     body.removeChild(winScreen)
   })
 }
 
-/**
- * Displays game scores
+/** 
+ * This function displays and updates the scores every round
+ * @summary It keeps track of the Player score, the Computer score, and the round number.
  */
 let showScores = () => {
   clearGame(scoreDiv)
@@ -336,6 +310,10 @@ let showScores = () => {
   scoreDiv.appendChild(html)
 }
 
+/** 
+ * This function displays all the moves already made in the current iteration of the game
+ * @summary This is for the user's convenience, but it is also useful to have for future updates that may include pattern recognition
+ */
 let moveTrace = () => {
   let html = document.createElement("li")
   html.innerHTML = `
@@ -344,11 +322,11 @@ let moveTrace = () => {
   moveTraceOl.appendChild(html)
 }
 
-/**
- * Displays visual icons of weapons
+/** 
+ * This function adds the game icons to the game div, and sets up the classes used in the css for styling the icons
+ * Runs changeCssVars() to edit styling based on current game settings
  */
 let displayIcons = () => {
-  // clearGame(game_iconsDiv)
   let html = document.createElement("div")
   html.classList.add(`circle`, `weapons${numberOfWeapons}`)
   for (let i = 0; i < numberOfWeapons; i++) {
@@ -360,8 +338,9 @@ let displayIcons = () => {
   gameDiv.appendChild(html)
 }
 
-/**
- * Edits CSS variables to allow for pentagon or triangle layout of icons
+/** 
+ * This function edits the CSS variables in the root tag, to allow for variable styling of the game icons
+ * @summary This allows for future updates where the user can edit the styling through the GUI, and for further addition of weapons
  */
 let changeCssVars = () => {
   let root = document.documentElement
@@ -372,6 +351,14 @@ let changeCssVars = () => {
   }
 }
 
+/** 
+ * This function checks if a game is in progress
+ * @summary If a game is running, but there is no score (i.e. the previous round(s) were all draws), returns false. If there is a score, returns true.
+ * Runs queryLeave to check with user if they really want to leave.
+ * @param {Boolean} noQuery - false by default - when true the function will not run queryLeave()
+ * @param {Boolean} about - false by default - true when function is called by clicking About button - will then run queryLeave(about = true).
+ * @return {Boolean} true if game is in progress - false otherwise.
+ */
 let checkInProgress = (noQuery = false, about = false) => {
   if (aiScore > 0 || playerScore > 0) {
     if (!noQuery) {
@@ -383,7 +370,11 @@ let checkInProgress = (noQuery = false, about = false) => {
     return false
   }
 }
-
+/** 
+ * This function displays a prompt when run, asking the user if they really want to leave.
+ * @summary Has buttons to let the user leave or stay. If about is true, clicking leave will navigate to about.html
+ * @param {Boolean} about - true if function is called from user clicking about button, false otherwise
+ */
 let queryLeave = (about = false) => {
   let html = document.createElement("div")
   html.classList.add("warning_div")
