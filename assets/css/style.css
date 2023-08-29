@@ -262,6 +262,11 @@ label {
   transform: rotate(var(--angle4)) translate(var(--icon_offset)) rotate(calc(0deg - var(--angle4)));
 }
 
+#move-trace {
+  height: 60%;
+  overflow-y: scroll;
+}
+
 .warning_div {
   position: fixed;
   top: 0;
@@ -331,8 +336,15 @@ label {
   width: 600px;
 }
 
-help {
+#help {
   display: none;
+}
+
+#credits {
+  align-self: center;
+  position: absolute;
+  bottom: 110px;
+
 }
 
 @media screen and (max-width: 1000px) {
