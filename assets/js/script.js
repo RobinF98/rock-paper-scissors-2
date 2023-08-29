@@ -20,10 +20,16 @@ let maxScore
 const moveTraceOl = document.getElementById("move-trace-ol")
 const descriptionDiv = document.getElementById("description")
 const helpButton = document.getElementById("help")
+// const descriptionDivAbout = document.getElementById("description-about")
+// const helpButtonAbout = document.getElementById("help-about")
 
 helpButton.addEventListener("click", () => {
   descriptionDiv.classList.toggle("hide")
 })
+
+// helpButtonAbout.addEventListener("click", () => {
+//   descriptionDivAbout.classList.toggle("hide")
+// })
 
 /** 
  * This funtion sets the game up based on the user selected settings.
@@ -259,10 +265,10 @@ let endGame = (playerWin) => {
 
     html.innerHTML = `
         <div class="warning_div_inner">
-          <h1>Congrats</h1>
-          <p>
-            You did it
-          </p>
+          <h2>Congrats</h2>
+          <h3>
+            You Win!
+          </h3>
           <div class="check_buttons">
             <div class="check_leave check_button button">
               <h3>Leave</h3>
@@ -273,10 +279,10 @@ let endGame = (playerWin) => {
   } else {
     html.innerHTML = `
         <div class="warning_div_inner">
-          <h1>Oh no!</h1>
-          <p>
+          <h2>Oh no!</h2>
+          <h3>
             The computer won
-          </p>
+          </h3>
           <p>
             Don't stress, you can always try again <3
           </p>

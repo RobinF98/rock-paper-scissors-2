@@ -64,6 +64,7 @@ In theory, you could add any number of extra weapons, as long as the total count
   * Fix: Removed code to set difficulty selector to old value
 * Help button displays on large screens
   * Fix: Edit help id in CSS to set default display to none
+* Help button does not function on small screens on about page
 
 ## Credits
 
