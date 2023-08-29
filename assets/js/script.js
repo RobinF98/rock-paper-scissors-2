@@ -32,7 +32,7 @@ helpButton.addEventListener("click", () => {
 // })
 
 /** 
- * This funtion sets the game up based on the user selected settings.
+ * This function sets the game up based on the user selected settings.
  * @summary Sets the maxScore and numberOfWeapons variables, and sets intial scores to 0. Runs fetchData() to start game
  */
 let startGame = () => {
@@ -216,10 +216,7 @@ let displayWin = (res) => {
 }
 
 /** 
- * This function runs computerMove()
- * @summary If the description is long, write your summary here. Otherwise, feel free to remove this.
- * @param {ParamDataTypeHere} parameterNameHere - Brief description of the parameter here. Note: For other notations of data types, please refer to JSDocs: DataTypes command.
- * @return {ReturnValueDataTypeHere} Brief description of the returning value here.
+ * This function runs computerMove() and gets the player weapon. It then compares the two in player_win(), and runs displayWin() with the result
  */
 let gamePlay = () => {
   computerMove()
