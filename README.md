@@ -8,6 +8,7 @@ In this gamem, the user selects the move they want to make (traditionally either
 BUT this game has an extra option: You can play with 5 weapons, instead of the usual 3. Spock and Lizard are added to the game, and allow for many more possibilities in game play and outcomes.
 In theory, you could add any number of extra weapons, as long as the total count remains an odd number. There is definitely opportunity here to allow the user to define their own extra weapons, and expand the game complexity almost indefinitely.
 
+You can visit the site [here](https://robinf98.github.io/rock-paper-scissors-2/)
 ## Features
 
 ---
@@ -67,7 +68,10 @@ In theory, you could add any number of extra weapons, as long as the total count
   * Fix: Edit help id in CSS to set default display to none
 * Help button does not function on small screens on about page
   * Fix: Remove help button from about page
-* 
+* Number of rounds input allows negative numbers and numbers greater than 50
+  * Fix: Change input to slider
+* Score div alternating between visible and hidden
+  * Fix: Set score div to hide on game reset, and show when game has started
 
 ## Credits
 
