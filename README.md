@@ -19,38 +19,39 @@ In theory, you could add any number of extra weapons, as long as the total count
 
   * The game description is visible by default on wider screens. It explains the game, and the mechanics of which weapon will beat which other weapon.
   
-  [Header](assets/documentation/header.png)
+  [Header](documentation/header.png)
+
 * ### Game Area
 
-  * This is where the game is displayed. It is topped by the Start / Reset button, which, once clicked, will start the game. 
+  * This is where the game is displayed. It is topped by the Start / Reset button, which, once clicked, will start the game.
   
-    ![Start/Reset Button](assets/documentation/start_button.png)
+    ![Start/Reset Button](documentation/start_button.png)
 
   * The game settings are listed here, for tweaking by the user
 
-    ![Game settings](assets/documentation/settings.png)
+    ![Game settings](documentation/settings.png)
 
   * The game icons (the weapons rock, paper, scissors, lizard, Spock) will be displayed under the Start / Reset button
 
-    [Game Icons (3)](assets/documentation/game_icons_3.png)
+    [Game Icons (3)](documentation/game_icons_3.png)
 
-    [Game Icons (5)](assets/documentation/game_icons_5.png)
+    [Game Icons (5)](documentation/game_icons_5.png)
 
   * After each round, the game icons are replaced by a screen informing the user who won the round, or if it was a draw:
 
-    [Round Win](assets/documentation/round_win.png)
+    [Round Win](documentation/round_win.png)
   
-    [Round Lose](assets/documentation/round_lose.png)
+    [Round Lose](documentation/round_lose.png)
 
-    [Round Draw](assets/documentation/round_draw.png)
+    [Round Draw](documentation/round_draw.png)
 
   * When a user clicks something that will leave the current game, a warning will pop up. A similar screen pops up when the game ends due to either the player or the computer winning the game
 
-    [Leave Alert](assets/documentation/query_leave.png)
+    [Leave Alert](documentation/query_leave.png)
 
-    [Win Screen](assets/documentation/win_screen.png)
+    [Win Screen](documentation/win_screen.png)
 
-    [Lose Screen](assets/documentation/lose_screen.png)
+    [Lose Screen](documentation/lose_screen.png)
 
 ## Testing
 
@@ -65,6 +66,8 @@ In theory, you could add any number of extra weapons, as long as the total count
 * Help button displays on large screens
   * Fix: Edit help id in CSS to set default display to none
 * Help button does not function on small screens on about page
+  * Fix: Remove help button from about page
+* 
 
 ## Credits
 

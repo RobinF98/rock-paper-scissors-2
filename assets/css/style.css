@@ -21,6 +21,7 @@ body {
   /* flex-direction: column; */
   /* width: 100vw; */
   background-color: var(--lilac);
+  box-sizing: border-box;
 }
 
 header,
@@ -81,24 +82,26 @@ main {
 }
 
 .setup {
-  position: absolute;
-  top: 20px;
-  left: 300px;
-  width: 100%;
   display: flex;
-  flex-direction: column;
+  flex-wrap: wrap;
+  flex-direction: row;
   justify-content: space-between;
   padding-left: 50px;
 }
 
-select,
-input,
 label {
   padding: 5px;
   display: block;
   height: max-content;
   width: max-content;
-  font-size: 1.2rem;
+  font-size: 1.1rem;
+}
+
+select,
+input {
+  font-size: 1.5rem;
+  height: max-content;
+  width: min-content;
 }
 
 .options {
@@ -108,16 +111,12 @@ label {
 #game-div {
   position: relative;
   width: 100%;
-  height: 450px;
-
-  /* background-color: rgb(34, 95, 150); */
-
   display: flex;
   justify-content: center;
 }
 
 #score-div {
-  display: flex;
+  /* display: flex; */
   font-size: 2em;
   /* background-color: black; */
   /* width: 90%; */
@@ -128,6 +127,10 @@ label {
   padding: 10px;
   justify-content: center;
   margin: 10px;
+}
+
+.score {
+  display: flex;
 }
 
 .show_round_win {
@@ -159,9 +162,10 @@ label {
 }
 
 /* Hides elements */
-/* .hide {
+.hide_score,
+.hide_score {
   display: none;
-} */
+}
 
 /* .unclick {
     pointer-events: none;
@@ -208,9 +212,9 @@ label {
 
 
 .circle {
-  z-index: 50;
+  /* z-index: 50; */
   margin-top: 40px;
-  position: absolute;
+  /* position: absolute; */
   align-self: center;
   justify-self: center;
   width: 600px;
