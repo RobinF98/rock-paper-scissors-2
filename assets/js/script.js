@@ -308,9 +308,10 @@ let showScores = () => {
   html.innerHTML = `
         Player Score: ${playerScore} <br>
         AI Score: ${aiScore} <br>
-        Round no: ${roundNumber}
+        Round: ${roundNumber}
     `
   scoreDiv.appendChild(html)
+  scoreDiv.classList.toggle("hide_score")
 }
 
 /** 
