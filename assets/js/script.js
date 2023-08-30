@@ -1,9 +1,13 @@
-let gameData = []
 const body = document.getElementsByTagName("body")[0]
 const gameDiv = document.getElementById("game-div")
 const startButton = document.getElementsByClassName("start_button")[0]
 const scoreDiv = document.getElementById("score-div")
 const aboutButton = document.getElementById("about")
+const maxScoreElement = document.getElementById("max-score")
+const moveTraceOl = document.getElementById("move-trace-ol")
+const descriptionDiv = document.getElementById("description")
+const helpButton = document.getElementById("help")
+let gameData = []
 let numberOfWeaponsButton = document.getElementById("no-weapons")
 let resetButton
 let roundNumber
@@ -15,21 +19,11 @@ let player
 let bestOf
 let numberOfWeapons = 3
 let gameStarted = false
-const maxScoreElement = document.getElementById("max-score")
 let maxScore
-const moveTraceOl = document.getElementById("move-trace-ol")
-const descriptionDiv = document.getElementById("description")
-const helpButton = document.getElementById("help")
-// const descriptionDivAbout = document.getElementById("description-about")
-// const helpButtonAbout = document.getElementById("help-about")
 
 helpButton.addEventListener("click", () => {
   descriptionDiv.classList.toggle("hide")
 })
-
-// helpButtonAbout.addEventListener("click", () => {
-//   descriptionDivAbout.classList.toggle("hide")
-// })
 
 /** 
  * This function sets the game up based on the user selected settings.
@@ -38,7 +32,6 @@ helpButton.addEventListener("click", () => {
 let startGame = () => {
   gameStarted = true;
   maxScore = parseInt(document.getElementById("max-score").value)
-  console.log("max score is " + maxScore)
   fetchData("assets/js/data.json")
   numberOfWeapons = document.getElementById("no-weapons").value
   playerScore = aiScore = roundNumber = 0
@@ -57,7 +50,7 @@ let startGame = () => {
  * @summary Runs clearGame() on various divs to reset them, and toggles the start button between displayin "Start Game" and "Reset".
  */
 let resetGame = () => {
-
+  //clear div contents
   clearGame(gameDiv, scoreDiv, moveTraceOl)
   gameStarted = false;
   startButton.innerHTML = `
@@ -65,6 +58,8 @@ let resetGame = () => {
     `
   startButton.classList.toggle("reset_button")
   startButton.classList.toggle("start_button")
+  // hide score div
+  scoreDiv.classList.add("hide_score")
 }
 
 /** 
@@ -110,24 +105,14 @@ let fetchData = url => {
  */
 let showGame = () => {
   displayIcons()
-  // let html = document.createElement("div")
-  // for (let i = 0; i < numberOfWeapons; i++) {
-  //   html.innerHTML += `
-  //           <div class="${gameData[i].name} sel_button">
-  //               <h2>${gameData[i].name}</h2>
-  //           </div>
-  //           `
-  // }
-  // html.id = "selection"
-  // gameDiv.appendChild(html)
-  //add event listeners to all instances of sel_button class
-  let buttons = document.querySelectorAll(".sel_button, .game_icon").values()
+
+  //add event listeners to all instances of select_button class
+  let buttons = document.querySelectorAll(".select_button, .game_icon").values()
   for (let button of buttons) {
     button.addEventListener('click', () => {
 
       // set user weapon
       weapon = button.classList[0]
-      // confirm()
       gamePlay()
     })
   }
@@ -149,45 +134,45 @@ let computerMove = (numberOfWeapons = 3) => {
  * @return {String} Returns the result in the form of a String
  */
 let player_win = () => {
-  let res
+  let result
   if (aiWeapon === player.name) {
-    res = "draw"
-    return res
+    result = "draw"
+    return result
   }
-  res = !player.weakness.includes(aiWeapon) ? "win" : "lose"
-  return res
+  result = !player.weakness.includes(aiWeapon) ? "win" : "lose"
+  return result
 }
 
 /** 
  * Displays win screen after every round
- * @summary Replaces contents of gameDiv with HTML stating a loss, a win, or a draw for the player, depending on the res parameter. Runs showScores and moveTrace to update scores and move history.
+ * @summary Replaces contents of gameDiv with HTML stating a loss, a win, or a draw for the player, depending on the result parameter. Runs showScores and moveTrace to update scores and move history.
  * Runs checkEnd to see if game end criteria has been reached. Adds a clickable HTML element that will remove the round win screen and run showGame to continue with the next round.
- * @param {String} res - The result of the round just played (draw/win/lose)
+ * @param {String} result - The result of the round just played (draw/win/lose)
  */
-let displayWin = (res) => {
+let displayWin = (result) => {
   let html = document.createElement("div")
   html.innerHTML = `
-        <h1 class = "ai_${res}">
+        <h2 class = "ai_${result}">
             AI : ${aiWeapon}
-        </h1>
-        <h1 class = "player_${res}">
+        </h2>
+        <h2 class = "player_${result}">
             Player: ${player.name}
-        </h1>`
+        </h2>`
 
-  switch (res) {
+  switch (result) {
     case "draw":
       html.innerHTML += `
-            <h2>Let's try that again. You guys are eerily similar</h2>`
+            <h3>Let's try that again. You guys are eerily similar</h3>`
       break
     case "win":
       html.innerHTML +=
-        `<h2>Player Wins</h2>`
+        `<h3>Player Wins</h3>`
       playerScore++
       roundNumber++
       break
     case "lose":
       html.innerHTML +=
-        `<h2>AI Wins</h2>`
+        `<h3>AI Wins</h3>`
       aiScore++
       roundNumber++
   }
@@ -242,10 +227,8 @@ let clearGame = (...args) => {
  */
 let checkEnd = () => {
   if (aiScore === maxScore) {
-    console.log("Robots Win")
     endGame(false)
   } else if (playerScore === maxScore) {
-    console.log("Player Win")
     endGame(true)
   }
 }
@@ -311,7 +294,10 @@ let showScores = () => {
         Round: ${roundNumber}
     `
   scoreDiv.appendChild(html)
-  scoreDiv.classList.toggle("hide_score")
+  // Show score div
+  if (gameStarted) {
+    scoreDiv.classList.remove("hide_score")
+  }
 }
 
 /** 
@@ -384,7 +370,7 @@ let queryLeave = (about = false) => {
   html.classList.add("warning_div")
   html.innerHTML = `
       <div class="warning_div_inner">
-        <h1>Are you sure you want to leave?</h1>
+        <h2>Are you sure you want to leave?</h2>
         <p>
           You will lose all your current progress
         </p>
@@ -400,7 +386,6 @@ let queryLeave = (about = false) => {
     `
   body.appendChild(html)
   let warningDiv = document.getElementsByClassName("warning_div")[0]
-  // warningDiv.addEventListener("")
   document.getElementsByClassName("check_stay")[0].addEventListener("click", () => {
     body.removeChild(warningDiv)
   })
