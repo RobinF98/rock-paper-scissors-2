@@ -83,6 +83,15 @@ The site was tested on the following validators
     * The most complex function has a cyclomatic complexity value of 4 while the median is 1.
 
   * There are no other validation errors in the JS
+
+### Performance
+
+ The following was generated from the Chrome DevTools lighthouse report:
+
+* [Index](documentation/lighthouse_index.png)
+
+* [About](documentation/lighthouse_about.png)
+
 ## Bugs
 
 ---
@@ -103,8 +112,19 @@ The site was tested on the following validators
   * About button will sometimes be unresponsive or lead to query that cannot be closed withour page reload
     * Was unable to recreate this bug in testing
 
+## Additional
+
+---
+
+### Why use JSON
+
+The data.JSON file was used to provide support for any future additions to the site. More content and weapons can be added without making any large changes to the JavaScript.
+Even if no future updates occur, storing the data in a JSON file greatly reducs the complexity and length of the JS file, by eliminating the need for a long chain of if-else or switch statements.
+
 ## Credits
 
  ---
 
 SVG's were sourced from [The Noun Project](https://thenounproject.com/), from the collection by [Juicy Fish](https://thenounproject.com/admin885/)
+
+Much advice, testing, and encouragement was sourced from my CI mentor, [Juliia Konovalova](https://github.com/IuliiaKonovalova)
