@@ -1,22 +1,20 @@
+/* jshint esversion:8 */
 const body = document.getElementsByTagName("body")[0]
 const gameDiv = document.getElementById("game-div")
 const startButton = document.getElementsByClassName("start_button")[0]
 const scoreDiv = document.getElementById("score-div")
 const aboutButton = document.getElementById("about")
-const maxScoreElement = document.getElementById("max-score")
 const moveTraceOl = document.getElementById("move-trace-ol")
 const descriptionDiv = document.getElementById("description")
 const helpButton = document.getElementById("help")
 let gameData = []
 let numberOfWeaponsButton = document.getElementById("no-weapons")
-let resetButton
 let roundNumber
 let weapon
 let playerScore
 let aiScore
 let aiWeapon
 let player
-let bestOf
 let numberOfWeapons = 3
 let gameStarted = false
 let maxScore
