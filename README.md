@@ -58,20 +58,50 @@ You can visit the site [here](https://robinf98.github.io/rock-paper-scissors-2/)
 
 ---
 
+The site has undergone testing on 3 different browsers:
+Chrome, Firefox, and MS Edge
+All features work as they should, and the site makes no use of features that are not supported by all main browsers.
+The site is also functional on mobile screens
+
+### Validation
+
+The site was tested on the following validators
+
+* W3C HTML validator:
+  * No issues were found through this validator
+* W3C CSS (Jigsaw) validator:
+  * The only issues the validator had was with the root variables, which are not buggy and are valid CSS
+* JSHint:
+  * This Validator reported the following:
+
+    * There are 29 functions in this file.
+
+    * Function with the largest signature take 2 arguments, while the median is 0.
+
+    * Largest function has 12 statements in it, while the median is 3.
+
+    * The most complex function has a cyclomatic complexity value of 4 while the median is 1.
+
+  * There are no other validation errors in the JS
 ## Bugs
 
 ---
 
-* Set difficulty selector reverts to previous value when game resets due to changing difficulty
-  * Fix: Removed code to set difficulty selector to old value
-* Help button displays on large screens
-  * Fix: Edit help id in CSS to set default display to none
-* Help button does not function on small screens on about page
-  * Fix: Remove help button from about page
-* Number of rounds input allows negative numbers and numbers greater than 50
-  * Fix: Change input to slider
-* Score div alternating between visible and hidden
-  * Fix: Set score div to hide on game reset, and show when game has started
+* Fixed Bugs
+  * Set difficulty selector reverts to previous value when game resets due to changing difficulty
+    * Fix: Removed code to set difficulty selector to old value
+  * Help button displays on large screens
+    * Fix: Edit help id in CSS to set default display to none
+  * Help button does not function on small screens on about page
+    * Fix: Remove help button from about page
+  * Number of rounds input allows negative numbers and numbers greater than 50
+    * Fix: Change input to slider
+  * Score div alternating between visible and hidden
+    * Fix: Set score div to hide on game reset, and show when game has started
+
+* Unfixed bugs
+  * About button will sometimes be unresponsive or lead to query that cannot be closed withour page reload
+    * Was unable to recreate this bug in testing
 
 ## Credits
 
